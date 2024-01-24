@@ -2,16 +2,33 @@ package com.example.commerce.presentation.ui.items.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.commerce.common.util.setImageURL
 import com.example.commerce.data.dto.ProductDTO
 import com.example.commerce.databinding.ProductsRowBinding
 
-class ItemsAdapter(val list: List<ProductDTO>) : RecyclerView.Adapter<ItemsAdapter.ItemsHolder>() {
+class ItemsAdapter : RecyclerView.Adapter<ItemsAdapter.ItemsHolder>() {
 
     inner class ItemsHolder(val binding: ProductsRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
     }
+
+    private val differCallBack = object : DiffUtil.ItemCallback<ProductDTO>() {
+        override fun areItemsTheSame(oldItem: ProductDTO, newItem: ProductDTO): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun areContentsTheSame(oldItem: ProductDTO, newItem: ProductDTO): Boolean {
+            return oldItem.id == newItem.id
+        }
+    }
+    val differ = AsyncListDiffer(this, differCallBack)
+    var product: List<ProductDTO>
+        get() = differ.currentList
+        set(value) = differ.submitList(value.toList())
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemsHolder {
         val binding = ProductsRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -19,11 +36,11 @@ class ItemsAdapter(val list: List<ProductDTO>) : RecyclerView.Adapter<ItemsAdapt
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return product.size
     }
 
     override fun onBindViewHolder(holder: ItemsHolder, position: Int) {
-        val item = list[position]
+        val item = product[position]
 
         with(holder) {
             binding.productTitle.text = item.title

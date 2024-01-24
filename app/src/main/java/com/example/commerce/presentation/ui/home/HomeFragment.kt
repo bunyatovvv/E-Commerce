@@ -14,6 +14,7 @@ import com.example.commerce.common.util.gone
 import com.example.commerce.common.util.linear
 import com.example.commerce.common.util.visible
 import com.example.commerce.databinding.FragmentHomeBinding
+import com.example.commerce.presentation.ui.categories.adapter.CategoryAdapter
 import com.example.commerce.presentation.ui.home.adapter.AllProductsAdapter
 import com.example.commerce.presentation.ui.home.adapter.CategoiresAdapter
 import com.example.commerce.presentation.ui.single_product.SingleProductViewModel
@@ -24,6 +25,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var baseViewModel: BaseViewModel
+    private val allProductsAdapter by lazy { AllProductsAdapter() }
+    private val categoryAdapter by lazy { CategoiresAdapter() }
+
 
     private lateinit var singleProductViewModel: SingleProductViewModel
 
@@ -41,11 +45,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                     Status.SUCCESS -> {
                         var filter = it.data !!.filter { it.rating > 4 }
                         with(binding) {
-                            val adapter = AllProductsAdapter(it.data)
-                            topSellingRcv.adapter = adapter
+                            allProductsAdapter.product = it.data
+                            topSellingRcv.adapter = allProductsAdapter
                             topSellingRcv.layoutManager?.linear(requireContext())
                             progressBar.gone()
-                            adapter.setOnItemClickListener {
+                            allProductsAdapter.setOnItemClickListener {
                                 singleProductViewModel.getProductsById(it.id)
                                 singleProductViewModel.getProductComments(it.id)
                                 findNavController().navigate(R.id.action_homeFragment_to_singleProductFragment)
@@ -53,7 +57,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         }
 
                         filter = it.data.filter { it.price < 130.9 }
-                        val adapter = AllProductsAdapter(filter)
+                        val adapter = AllProductsAdapter()
+                        adapter.product = filter
                         binding.newInRcv.adapter = adapter
                         binding.newInRcv.layoutManager?.linear(requireContext())
                         adapter.setOnItemClickListener {
@@ -73,7 +78,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             })
             categoryData.observe(viewLifecycleOwner, Observer {
                 if (it.status == Status.SUCCESS) {
-                    binding.categoriesRcv.adapter = CategoiresAdapter(it.data !!)
+                    categoryAdapter.category = it.data!!
+                    binding.categoriesRcv.adapter = categoryAdapter
                     binding.categoriesRcv.layoutManager?.linear(requireContext())
                 }
             })

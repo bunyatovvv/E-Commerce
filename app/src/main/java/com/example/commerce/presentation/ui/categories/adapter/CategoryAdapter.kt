@@ -2,17 +2,34 @@ package com.example.commerce.presentation.ui.categories.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.commerce.common.util.setImageURL
 import com.example.commerce.data.dto.CategoriesDTO
 import com.example.commerce.databinding.SingleCategoryBinding
+import com.example.commerce.domain.model.BasketModel
 
-class CategoryAdapter(val list: List<CategoriesDTO>) :
+class CategoryAdapter :
     RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
 
     inner class CategoryHolder(val binding: SingleCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
     }
+
+    private val differCallBack = object : DiffUtil.ItemCallback<CategoriesDTO>() {
+        override fun areItemsTheSame(oldItem: CategoriesDTO, newItem: CategoriesDTO): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun areContentsTheSame(oldItem: CategoriesDTO, newItem: CategoriesDTO): Boolean {
+            return oldItem.id == newItem.id
+        }
+    }
+    val differ = AsyncListDiffer(this, differCallBack)
+    var category: List<CategoriesDTO>
+        get() = differ.currentList
+        set(value) = differ.submitList(value.toList())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
         val binding =
@@ -21,11 +38,11 @@ class CategoryAdapter(val list: List<CategoriesDTO>) :
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return category.size
     }
 
     override fun onBindViewHolder(holder: CategoryHolder, position: Int) {
-        val item = list[position]
+        val item = category[position]
 
         with(holder) {
             binding.titleCategoryTxt.text = item.name

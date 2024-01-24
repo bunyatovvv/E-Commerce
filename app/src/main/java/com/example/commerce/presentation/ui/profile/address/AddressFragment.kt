@@ -22,7 +22,7 @@ class AddressFragment : BaseFragment<FragmentAddressBinding>(FragmentAddressBind
 
     private lateinit var baseViewModel: BaseViewModel
     private lateinit var profileViewModel: ProfileViewModel
-    private var currentUserId = 0
+    private val addressAdapter by lazy { AddressAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         baseViewModel = ViewModelProvider(requireActivity())[BaseViewModel::class.java]
@@ -42,9 +42,9 @@ class AddressFragment : BaseFragment<FragmentAddressBinding>(FragmentAddressBind
         profileViewModel.addressData.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    val adapter = AddressAdapter(it.data !!)
+                    addressAdapter.list = it.data!!
                     with(binding) {
-                        addressRcv.adapter = adapter
+                        addressRcv.adapter = addressAdapter
                         addressRcv.vertical(requireContext())
                         pb.gone()
                         addressRcv.visible()

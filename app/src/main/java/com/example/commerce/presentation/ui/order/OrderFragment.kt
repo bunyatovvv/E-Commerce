@@ -26,6 +26,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(FragmentOrderBinding::i
 
     private lateinit var baseViewModel: BaseViewModel
     private lateinit var orderViewModel: OrderViewModel
+    private val orderAdapter by lazy { OrdersAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         baseViewModel =
@@ -41,16 +42,16 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(FragmentOrderBinding::i
         orderViewModel.orderData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
-                    val adapter = OrdersAdapter(it.data !!)
+                    orderAdapter.order = it.data!!
                     with(binding) {
                         pb.gone()
                         infoText.gone()
-                        ordersRcv.adapter = adapter
+                        ordersRcv.adapter = orderAdapter
                         ordersRcv.vertical(requireContext())
                         ordersRcv.visible()
                     }
 
-                    adapter.setOnItemClickListener {
+                    orderAdapter.setOnItemClickListener {
                         val action =
                             OrderFragmentDirections.actionOrderFragmentToSingleOrderFragment(it)
                         findNavController().navigate(action)

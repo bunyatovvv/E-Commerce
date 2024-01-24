@@ -37,6 +37,7 @@ class SingleProductFragment :
     private var currentUserId = 0
     private var quantity = 1
     private var userList = listOf<UserDTO>()
+    private val viewPagerAdapter by lazy { ViewPagerAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         singleProductViewModel =
@@ -72,10 +73,10 @@ class SingleProductFragment :
             when (productData.status) {
                 Status.SUCCESS -> {
                     productData.data?.let { product ->
-                        val adapter = ViewPagerAdapter(product.images)
+                        viewPagerAdapter.imageList = product.images
 
                         with(binding.imagesViewPager) {
-                            binding.imagesViewPager.adapter = adapter
+                            binding.imagesViewPager.adapter = viewPagerAdapter
                             layoutManager?.linear(requireContext())
                             clipToPadding = false
                             clipChildren = false

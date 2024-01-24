@@ -13,13 +13,14 @@ class OrderDetailFragment :
     BaseFragment<FragmentOrderDetailBinding>(FragmentOrderDetailBinding::inflate) {
 
     private val args: OrderDetailFragmentArgs by navArgs()
+    private val orderDetailAdapter by lazy { OrderDetailAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val order = args.order
-        val adapter = OrderDetailAdapter(order.products)
+        orderDetailAdapter.list = order.products
 
         with(binding) {
-            orderRcv.adapter = adapter
+            orderRcv.adapter = orderDetailAdapter
             orderRcv.vertical(requireContext())
             title.text = "Order ${order.id} Items"
             backCardview.setOnClickListener {

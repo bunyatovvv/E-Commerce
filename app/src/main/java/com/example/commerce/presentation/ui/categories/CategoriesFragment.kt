@@ -24,6 +24,7 @@ class CategoriesFragment :
 
     private val categoriesViewModel: CategotiesViewModel by viewModels()
     private lateinit var itemsViewModel: ItemsViewModel
+    private val categoryAdapter by lazy { CategoryAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         itemsViewModel = ViewModelProvider(requireActivity())[ItemsViewModel::class.java]
@@ -31,13 +32,13 @@ class CategoriesFragment :
         categoriesViewModel.categoryData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
-                    val adapter = CategoryAdapter(it.data !!)
+                    categoryAdapter.category = it.data!!
                     with(binding){
-                        ctgRcv.adapter = adapter
+                        ctgRcv.adapter = categoryAdapter
                         ctgRcv.vertical(requireContext())
                         binding.pb.gone()
                     }
-                    adapter.setOnItemClickListener {
+                    categoryAdapter.setOnItemClickListener {
                         itemsViewModel.getProductsByCategory(it.id)
                         findNavController().navigate(R.id.action_categoriesFragment_to_itemsFragment)
                     }

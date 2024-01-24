@@ -21,6 +21,7 @@ class ItemsFragment : BaseFragment<FragmentItemsBinding>(FragmentItemsBinding::i
 
     private lateinit var itemsViewModel: ItemsViewModel
     private lateinit var singleProductViewModel: SingleProductViewModel
+    private val itemsAdapter by lazy { ItemsAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         itemsViewModel = ViewModelProvider(requireActivity())[ItemsViewModel::class.java]
@@ -30,10 +31,10 @@ class ItemsFragment : BaseFragment<FragmentItemsBinding>(FragmentItemsBinding::i
         itemsViewModel.productData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
-                    val adapter = ItemsAdapter(it.data !!)
-                    binding.itemsRcv.adapter = adapter
+                    itemsAdapter.product = it.data!!
+                    binding.itemsRcv.adapter = itemsAdapter
                     binding.itemsRcv.layoutManager = GridLayoutManager(requireContext(), 2)
-                    adapter.setOnItemClickListener {
+                    itemsAdapter.setOnItemClickListener {
                         singleProductViewModel.getProductsById(it.id)
                         singleProductViewModel.getProductComments(it.id)
                         findNavController().navigate(R.id.action_itemsFragment_to_singleProductFragment)

@@ -20,6 +20,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(FragmentPaymentBind
 
     private lateinit var baseViewModel: BaseViewModel
     private lateinit var profileViewModel: ProfileViewModel
+    private val paymentAdapter by lazy { PaymentAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         baseViewModel = ViewModelProvider(requireActivity())[BaseViewModel::class.java]
@@ -37,9 +38,9 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(FragmentPaymentBind
 
         profileViewModel.paymentData.observe(viewLifecycleOwner) {
             if (it.status == Status.SUCCESS) {
-                val adapter = PaymentAdapter(it.data !!)
+                paymentAdapter.list = it.data!!
                 with(binding) {
-                    paymentRcv.adapter = adapter
+                    paymentRcv.adapter = paymentAdapter
                     paymentRcv.vertical(requireContext())
                     pb.gone()
                     paymentRcv.visible()

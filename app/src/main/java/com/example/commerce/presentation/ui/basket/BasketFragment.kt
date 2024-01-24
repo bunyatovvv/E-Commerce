@@ -34,6 +34,7 @@ class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding
     private var subtotal = 0
     private var shipping = 0
     private var total = 0
+    private val basketAdapter by lazy { BasketAdapter() }
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,11 +58,11 @@ class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding
             when (it.status) {
                 Status.SUCCESS -> {
                     if (it.data !!.products.isNotEmpty()) {
-                        val adapter = BasketAdapter(it.data.products)
+                        basketAdapter.basket = it.data.products
                         with(binding) {
                             pb.gone()
                             basketRcv.visible()
-                            basketRcv.adapter = adapter
+                            basketRcv.adapter = basketAdapter
                             basketRcv.vertical(requireContext())
                             bottomLayout.visible()
                             removeAll.visible()
