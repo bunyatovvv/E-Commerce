@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Commerce</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email_address">Email address</string>
+    <string name="succesfully_added">Successfully added</string>
+    <string name="fill_fields">Please fill all the fields</string>
+    <string name="product_added_fav">Product is added to favorites list</string>
+    <string name="add_payment_method">Add Payment Method</string>
+    <string name="add_shipping_address">Add Shipping Address</string>
+</resources>
