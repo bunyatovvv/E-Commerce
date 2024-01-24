@@ -2,15 +2,11 @@ package com.example.commerce.presentation.ui.basket
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.commerce.R
 import com.example.commerce.common.BaseFragment
 import com.example.commerce.common.BaseViewModel
@@ -21,9 +17,6 @@ import com.example.commerce.common.util.visible
 import com.example.commerce.databinding.FragmentBasketBinding
 import com.example.commerce.domain.model.CheckoutModel
 import com.example.commerce.presentation.ui.basket.adapter.BasketAdapter
-import com.example.commerce.presentation.ui.items.ItemsViewModel
-import com.example.commerce.presentation.ui.order.adapter.OrdersAdapter
-import com.example.commerce.presentation.ui.single_product.SingleProductFragmentDirections
 import kotlin.math.roundToInt
 
 class BasketFragment : BaseFragment<FragmentBasketBinding>(FragmentBasketBinding::inflate) {

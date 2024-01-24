@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.commerce.R
 import com.example.commerce.common.util.setImageURL
-import com.example.commerce.data.dto.PaymentDTO
 
 class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.ViewPagerViewHolder>() {
 

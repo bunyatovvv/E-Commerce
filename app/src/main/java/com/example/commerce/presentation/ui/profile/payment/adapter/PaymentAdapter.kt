@@ -5,11 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.commerce.data.dto.AddressDTO
 import com.example.commerce.data.dto.PaymentDTO
-import com.example.commerce.databinding.SingleAddressBinding
 import com.example.commerce.databinding.SinglePaymentBinding
-import com.example.commerce.presentation.ui.profile.address.adapter.AddressAdapter
 
 class PaymentAdapter : RecyclerView.Adapter<PaymentAdapter.PaymentHolder>() {
 

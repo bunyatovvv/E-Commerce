@@ -1,7 +1,6 @@
 package com.example.commerce.presentation.ui.single_product
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -24,7 +23,6 @@ import com.example.commerce.presentation.ui.basket.BasketViewModel
 import com.example.commerce.presentation.ui.single_product.adapter.CommentsAdapter
 import com.example.commerce.presentation.ui.single_product.adapter.ViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.log
 import kotlin.math.round
 
 @AndroidEntryPoint
