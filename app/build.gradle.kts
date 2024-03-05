@@ -74,8 +74,6 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
 
-
-
     //retrofit
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -87,8 +85,6 @@ dependencies {
     kapt ("com.google.dagger:hilt-compiler:2.48.1")
     annotationProcessor ("com.google.dagger:hilt-compiler:2.48.1")
 
-
-
     //navigation
     // Kotlin
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
@@ -99,15 +95,6 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.15.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.15.0")
 
-    //rvDecorator
-    implementation ("it.xabaras.android:recyclerview-swipedecorator:1.4")
-
-
-    //lottie
-    implementation ("com.airbnb.android:lottie:$lottieVersion")
-
-    //swipeRefresh
-    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
 }
 kapt {
